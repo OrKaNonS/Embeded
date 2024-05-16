@@ -1,0 +1,111 @@
+### 람다 (Lanbda) 표현식(expression) ###
+
+[ Statement(문장) 과 expression(표현식) ]
+
+int i = 10 + 20 ;
+
+위의 식 " int i = 10 + 20 ; " 전체는 문장
+" 10 + 20 " 은 표현식 즉, 실행하면 결과의 값이 될 수 있는 부분 ]
+
+
+* 메소드를 간략한 문법형태로 사용하기 위한 문법
+* "파라미터리스트 -> 구현부" 문법 형태로 취함 _ 한번만 사용할 경우
+
+* 예시1)
+  int add(int x, int y) {
+    return x+y;
+}
+ (x, y) -> x + y
+
+* 예시2)
+ void  int printName(String str) {
+    System.out.println(str);
+}
+str -> System.out.println(str)
+
+* 예시3)
+ void  int printinfo(String str, int age) { 
+    System.out.println(str);
+    System.out.println(age);
+  }
+(str, age) -> {
+	System.out.println(str);
+	System.out.println(age);
+  }
+
+* 문장 (Statement) : 실행가능한 코드 단위
+* 표현식(Expression) : 실행해서 결과가 값(value)인 문장
+* 모든 메소드는 람다표현식의 형식으로 변환해서 사용할 수 있지만 
+  람다는 일회성 호출에만 사용된다.
+
+
+### 쓰레드(Thread) ###
+
+* 소프트웨어(Software) > 프로그램(Program) > 프로세스(Process) > 쓰레드(Thread)
+* 소프트웨어 : 하드웨어의 물리적 형태가 아닌 전자적 신호를 사용한 IT인프라
+* 프로그램 : 프로그래밍 언어를 사용해서 일련의 실행 순서를 만들어 둔 소프트웨어
+* 프로세스 : 컴퓨팅자원(CPU, Memory)을 독립적으로 받아 사용하는 실행 흐름
+* 쓰레드 : 프로세스가 할당받은 컴퓨팅자원을 공유해서(시간별로 쪼개서) 사용하는 실행 흐름
+
+
+* 쓰레드 생성법
+  1) Runnable 인터페이스를 구현
+    class MyThread implemtnts Runnable {
+    }
+
+  2) Thread 클래스를 상속
+   class MyThread extends Thread{
+   }
+* start() : 쓰레드 실행을 요청 > 특정 시점(스케줄러가 판단)run() 메소드가 자동 호출되어 실행됨
+
+* 주요메소드 < 쓰레드는 한 순간에 1개의 쓰레드만 실행된다 >
+ - activeCount() : 실행중인 쓰레드의 수
+ - currentThread() : 현재 실행중인 쓰레드가 무엇인지
+ - getId() : 쓰레드의 아이디
+ - getName() : 쓰레드의 이름
+ - getPriority() : 쓰레드의 우선순위(1~10 / 지정 안해줄 시 5 - 우선순위가 높은 쓰레드가 먼저 실행 될 확률이 높음)
+ - getState() : 쓰레드의 상태
+ - interrupt() : 현재 쓰레드를 인터럽트 
+ - interrupted() : 쓰레드가 인터럽트 되었는지 확인 (static)
+ - isAlive() : 쓰레드가 살아있느지 확인_실행 가능한 상태인지
+ - isDaemon : 데몬쓰레드인지 확인 / 데몬쓰레드 : 보조적인 역할을 담당하는 보이지 않는 곳에서 실행되는 낮은 우선순위는 가진 쓰레드
+ - isIterrrupted() : 쓰레드가 인터럽트 되었는지 확인 (non - static) 
+ - join() : 현재 쓰레드의 작업을 완료(종료)하고 다른 쓰레드를 수행
+ - run() : 쓰레드가 수행할 작업을 정의. start() 호출 시 자동으로 실행되는 메소드
+ - sleep() : 현재 쓰레드의 작업을 일정시간(밀리세컨드) 중단하고 일정 시간 후 현재 쓰레드를 다시 수행
+ - yield() : 현재 쓰레드의 작업을 다른 쓰레드가 실행 완료될때까지 양보하고 다른 쓰레드가 실행 완료되면 현재 쓰레드의 작업을 다시 수행
+
+
+* Thread State Diagram (쓰레드 상태)
+ - New = 쓰레드 객체가 새로 생성됨(start() 전)
+ - Runnable = 쓰레드가 JVM의 Thread Scheduler에 의해 실행 가능한 상태
+ - Run = 쓰레드가 실행 중인 상태
+ - Waiting = 쓰레드 Runnable 상태가 되기 위한 대기 상태
+   1) Timed Waiting : 지정한 시간만큼 대기
+   2) Waiting : 다른 쓰레드가 작업을 완전히 종료때까지 대기
+   * Timed Waiting, Waiting이 종료되면 Runnable
+ - Blocked : I/O 작업과 같이 시작부터 끝까지 한번에 처리되어야만 하는 작업에 대한 특별한 상태
+ - Terminated : 쓰레드 객체가 메모리에서 소멸
+
+
+* Synchronization in Thread Processing (쓰레드 처리에서의 동기화) / 
+ - Object의 동기화 관련 메소드
+*LOCK : 객체(메모리)에 대한 사용 권한_쓰레드가 공유하고 있는 프로세스가 할당받은 자원에 대한 사용 권한
+  1) notify : 실행 대기중인 특정 쓰레드에게 LOCK을 획득하도록
+  2) notifyAll : 실행 대기중인 전체 스레드 중 하나가 LOCK를 획득하도록
+  3) wait : LOCK을 반환
+    (1) wait() : 즉시 LOCK을 반환
+    (2) wait(long Millisecond) : 밀리초 동안 LOCK 반환
+    (2) wait(long Millisecond, int nanos) : 밀리초 나도초 동안 LOCK 반환
+ - 쓰레드에서의 동기화란 쓰레드 들이 동시에 사용할 수 있는 객체(메모리)를 사용할 수 있는 LOCK을
+   한 순간에 하나의 쓰레드에 부여하는 작업
+ - 동기화 방법
+  1) 메소드 동기화 : 메소드내의 모든 객체들이 동기화 됨.
+  2) 동기화 블록 : 블록내에서 특정한 객체가 동기화 됨.
+
+
+
+Synchronization(동기) : 신호를 주면 응답을 받고 다음 신호를 주면 응답을 받고 하는 방식, 전에 대한 응답이 다음번 응답에 영향을 미침(순서를 알 수 있음_신뢰성 있음)
+ASynchronization(비동기) : 신호을 여럿줘서 응답을 받는 방식(빠르지만 순서를 알 수 없음)
+
+

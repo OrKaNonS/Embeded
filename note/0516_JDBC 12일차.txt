@@ -1,0 +1,4 @@
+### JDBC(Java DataBase Connectivity) ###
+Java DataBase : Java에서 Data를 사용하기 위한 Interface 모음
+
+
