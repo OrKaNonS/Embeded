@@ -1,0 +1,31 @@
+데이터를 파일로 저장할 시 문제점 -> DBMS를 통한 관리로 보완 가능
+
+a.text와 b.text의 내용이 중복되면 확인이 어렵고
+
+a.text의 중복된 내용을 교체하면 b.text도 교체해야 하는 문제점이 생긴다.
+
+Database의 가장 중요한 건 무결성(Integrity)가 중요
+
+ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+
+-- 시스템 계정 접속 (CMD)
+sqlplus conn as sysdba
+1234
+
+-- 계정 생성
+create user scott identified by tiger;
+
+-- 계정 잠금 해제
+alter user scott identified by tiger acoount unlock;
+
+--계정에 롤(권한의 모임) 부여
+GRANT CONNECT,RESOURCE,UNLIMITED TABLESPACE TO SCOTT IDENTIFIED BY TIGER;
+
+-- SCOTT계정이 사용할 기본 테이블스페이스 설정
+ALTER USER SCOTT DEFAULT TABLESPACE USERS;
+
+-- SCOTT계정이 사용할 임시 테이블스페이스 설정
+ALTER USER SCOTT TEMPORARY TABLESPACE TEMP;
+
+-- SCOTT계정을 접속
+CONNECT SCOTT/TIGER
