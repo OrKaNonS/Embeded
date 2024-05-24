@@ -64,14 +64,16 @@ public class Student {
 
 	@Override
 	public String toString() {
-		String sgenderPrn = sgender.equals("M")? "남자" : "여자";
+		// 1번 홍길동 : 20살, 남자, 국어/영어/수학
+		String sgenderPrn = sgender.equals("M") ? "남자" : "여자";
 		String subjectListPrn = "";
-		for(Subject subject : subjectList) {
+		for (Subject subject : subjectList) {
 			subjectListPrn += subject.toString();
 		}
 			
 		//1번 홍길동 : 20살, 남자, 국어/영어/수학
-		return sno + "번 " + sname + " : " + sage + "살, " + sgender + "," +  subjectList;
+		return sno + "번 " + sname + " : " + sage + "살, "
+		+ sgenderPrn + ", " + subjectListPrn;
 	} ;
 	
 	

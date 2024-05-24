@@ -12,12 +12,23 @@ public class CreateDDL {
 
 	CreateDDL() {
 		conn = ConnectionUtil.getConnection();
-	}
+	}	
+	
+	public void startCreateDDL () {
+		
+		// Subject 생성 쿼리
+		StringBuilder sb = new StringBuilder();
+		
+		sb.append(" CREATE TABLE SUBJECT ( ");
+		sb.append("  SUBNO NUMBER PRIMARY KEY, ");
+		sb.append("  SUBNAME VARCHAR2(20) ");
+		sb.append(" ) ");
+		String createSubjectSql = sb.toString();
 
-	public static void main(String[] args) {
+		sb.setLength(0);
 		
 		// Student 테이블 생성 쿼리
-		StringBuilder sb = new StringBuilder();
+		
 		sb.append(" CREATE TABLE STUDENT ( ");
 		sb.append("  SNO NUMBER PRIMARY KEY, ");
 		sb.append("  SNAME VARCHAR2(20), ");
@@ -31,14 +42,7 @@ public class CreateDDL {
 		// StringBuilder 초기화
 		sb.setLength(0);
 
-		// Subject 생성 쿼리
-		sb.append(" CREATE TABLE SUBJECT ( ");
-		sb.append("  SUBNO NUMBER PRIMARY KEY, ");
-		sb.append("  SUBNAME VARCHAR2(20) ");
-		sb.append(" ) ");
-		String createSubjectSql = sb.toString();
 
-		sb.setLength(0);
 		
 		// Student 시퀀스 쿼리
 		String studentSequenceSql = " CREATE SEQUENCE STUDENT_SEQ";
@@ -53,9 +57,10 @@ public class CreateDDL {
 		Statement stmt = null;
 		try {
 			// Statement 생성 후 쿼리 실행
-			stmt = createDDL.conn.createStatement();
-			stmt.execute(createStudentSql);
+			System.out.println(createStudentSql);
+			stmt = conn.createStatement();
 			stmt.execute(createSubjectSql);
+			stmt.execute(createStudentSql);
 			stmt.execute(studentSequenceSql);
 			stmt.execute(subjectSequenceSql); 
 		} catch (SQLException sqle) {
@@ -63,7 +68,7 @@ public class CreateDDL {
 		} finally {
 			try {
 				stmt.close();
-				ConnectionUtil.closeConnection(createDDL.conn);
+				ConnectionUtil.closeConnection(conn);
 			} catch (SQLException sqle) {
 				sqle.printStackTrace();
 			}

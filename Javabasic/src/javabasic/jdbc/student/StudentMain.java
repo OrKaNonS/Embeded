@@ -21,14 +21,18 @@ public class StudentMain {
 
 		//객체 생성
 		StudentMain sm = new StudentMain();
+		CreateDDL cd = new CreateDDL();
+		InsertData id = new InsertData();
 
 		try {
-			
+			cd.startCreateDDL();
+			id.startInsertData();
 			// 조인 수행 결과 행들의 커서(ResultSet)
 			ResultSet rs = sm.getJoinedResultSet();
 			
+			
 			// 학생리스트
-			List<Student> studentList = new InsertData().getStudentList();		
+			List<Student> studentList = id.getStudentList();		
 			
 			// 학생 수만큼 반복			
 			for (int i = 0; i < studentList.size(); i++) {
@@ -60,13 +64,13 @@ public class StudentMain {
 	} // main
 
 	// 조인 쿼리 결과를 ResultSet으로 반환
-	ResultSet getJoinedResultSet() throws SQLException{		
+	ResultSet getJoinedResultSet() throws SQLException {
 		StringBuilder sb = new StringBuilder();
 		sb.append(" SELECT S.SNO SNO, S.SNAME SNAME, S.SAGE SAGE, S.SGENDER SGENDER ");
-		sb.append("    , SUB.SUBNO SUBNO, SUB.SUBNAME SUBNAME");
-		sb.append(" FROM STUDENT S, SUBJECT SUB");
-		sb.append(" WHERE S.SUBNO = SUB.SUBNO");
-		String joinSql = sb.toString();
+		sb.append("      , SUB.SUBNO, SUB.SUBNAME ");
+		sb.append(" FROM STUDENT S, SUBJECT SUB ");
+		sb.append(" WHERE S.SUBNO = SUB.SUBNO ");
+		String joinSql = sb.toString();	
 
 		Statement stmt = this.conn.createStatement();
 		return stmt.executeQuery(joinSql);
