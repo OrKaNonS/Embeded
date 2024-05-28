@@ -8,6 +8,7 @@ public class GuestDao {
 	
 	Connection conn;
 	GuestDao guestDao;
+	ResultSet rs;
 	
 	GuestDao() {
 		conn = ConnectionUtil.getConnection();
@@ -18,7 +19,7 @@ public class GuestDao {
 	
 	
 	// 리스트 조회
-	public List<GUEST> listGuest() throws SQLException {
+	public List<Guest> listGuest() throws SQLException {
 		String sql = "select gno, gname, gage, ggender, gsid, gconndt from guest";
 		pstmt = conn.prepareStatement(sqp);
 		rs = pstmt.executeQuery();
