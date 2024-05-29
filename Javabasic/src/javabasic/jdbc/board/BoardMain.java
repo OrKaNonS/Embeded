@@ -51,7 +51,7 @@ public class BoardMain {
 //		bm.cstmt.executeUpdate();
 //		System.out.println("함수 호출 후 리턴 받은 값 : " + bm.cstmt.getInt(1));
 		
-		// SELECT 문 안 함수를 호출할 때
+		// SELECT 문 안 함수를 호출할 때 
 //		String sql = "SELECT FUNC_COUNT() CNT FROM DUAL";
 //		bm.cstmt = bm.conn.prepareCall(sql);
 //		ResultSet rs = bm.cstmt.executeQuery();
