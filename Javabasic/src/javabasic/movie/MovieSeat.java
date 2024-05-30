@@ -1,63 +1,54 @@
 package javabasic.movie;
 
-import java.util.List;
-
 public class MovieSeat {
-	
-	// 조회
-	// 예약
-	// 예약취소
 
-	private int seatNum;   	// 좌석번호
-	private boolean result;	// 예약 여부
-	
+	private String seatNumber;	// 좌석번호
+	private boolean reserved;	// 예약여부_true와 false로 구분
+	private String userName;	// 예약자 이름
+	private String userID;		// 예약자 회원가입 ID
+
 	public MovieSeat() {
-		
+
 	}
 
-	public MovieSeat(int seatNum, boolean result) {
+	public MovieSeat(String seatNumber) {
 		super();
-		this.seatNum = seatNum;
-		this.result = result;
+		this.seatNumber = seatNumber;
+		this.reserved = false;	// 처음은 예약 안되어 있음_false
+		this.userName = "";		
+		this.userID = "";		
 	}
 
-	public int getSeatNum() {
-		return seatNum;
+	public String getSeatNumber() { // 좌석 번호 반환
+		return seatNumber;
 	}
 
-	public void setSeatNum(int seatNum) {
-		this.seatNum = seatNum;
+	public boolean isReserved() { // 예약 되어있을시 반환
+		return reserved;
 	}
 
-	public boolean isResult() {
-		return result;
-	}
-
-	public void setResult(boolean result) {
-		this.result = result;
+	public void reserve(String name, String id) { // 좌석 예약 완료_true
+		reserved = true;
+		userName = name;
+		userID = id;
 	}
 	
-	public void getreservation( int seatNum) { // 예약시 호출 메소드
-		this.seatNum = seatNum;		
+	public void cancel() { // 좌석 예약 취소_false
+		reserved = false;
+		userName = "";
+		userID = "";
 	}
 	
+	public String getreserveName() {
+		return userName;
+	}
 	
-	
-	public void cancel(boolean result) { // 예약 취소
-		this.result = false;
+	public String getuserID() {
+		return userID;
 	}
 
 	@Override
-	public String toString() {
-		return "MovieSeat [seatNum= " + seatNum + ", result=" + result + "]";
+	public String toString() { // 좌석을 문자열 "X"로 변경 아니면 번호로 입력
+		return reserved ? "X" : seatNumber;
 	}
-
-	
-	
-	
-	
-	
-	
-	
-	
 }

@@ -12,7 +12,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
-public class TodoGUI extends JFrame {
+public class TodoGUI extends JFrame implements ActionListener{
 	
 	TodoLogic todoLogic;
 	
