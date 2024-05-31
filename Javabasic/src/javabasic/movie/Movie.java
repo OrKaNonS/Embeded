@@ -7,6 +7,7 @@ public class Movie {
 	MovieSeat[][] seats; // 좌석 배열
 	private int reservationCount; // 예약된 좌석 수
 	Scanner sc = new Scanner(System.in);
+	MovieDao md = new MovieDao();
 
 	public Movie() {
 
@@ -18,7 +19,6 @@ public class Movie {
 				seats[i][j] = new MovieSeat(String.valueOf(j + 1));
 			}
 		}
-
 	}
 
 	public void showMenu() {
@@ -26,7 +26,7 @@ public class Movie {
 //		1. 좌석 보기
 //		2. 영화 예매
 //		3. 영화 예매 취소
-//		4. 예매 일괄 취소
+//		4. 예매 일괄 취소 _ 미구현
 //		5. 종료
 
 //		show_seats();
@@ -57,11 +57,11 @@ public class Movie {
 				cancelSeat();
 				break;
 
-			case 4:
-				cancelAll();
-				break;
+//			case 4:
+//				cancelAll();
+//				break;
 
-			case 5:
+			case 4:
 				System.out.println("프로그램 종료");
 				return;
 
@@ -103,14 +103,18 @@ public class Movie {
 		} else {
 			System.out.println("예약자 이름을 입력해주세요 :");
 			String name = sc.next();
-			System.out.println("예약자 회원가입 ID를 입력해주세요('-' 제외) :");
+			System.out.println("예약자 회원가입 ID를 입력해주세요 :");
 			String id = sc.next();
+			
+			md.reserveSeat(seatRow, seatNum + 1, name, id);
 			seats[seatRowint][seatNum].reserve(name, id);
 			System.out.println(seatRow + (seatNum + 1) + " 자리 예매가 완료되었습니다.");
 			reservationCount++;
-		}
-	}
-
+		} 
+			System.out.println("예약에 실패했습니다. 동일한 좌석 또는 아이디로 예약된 내역이 있습니다.");
+			}
+		
+	
 	// 3. 영화 예매 취소
 	public void cancelSeat() {
 		if (reservationCount == 0) { // 예매 숫자 0이면 예매 없다고 출력
@@ -131,6 +135,7 @@ public class Movie {
 
 			if (seats[seatRowint][seatNum].getreserveName().equals(name)
 					&& (seats[seatRowint][seatNum].getreserveName().equals(id))) {
+				md.cancelSeat(seatRow, seatNum + 1, name, id);
 				seats[seatRowint][seatNum].cancel();
 				System.out.println(seatRow + (seatNum + 1) + " 자리 예매가 취소되었습니다.");
 				reservationCount--;
@@ -142,34 +147,43 @@ public class Movie {
 		}
 	}
 
-	// 4. 영화 예매 일괄 취소
-	public void cancelAll() {
-		if (reservationCount == 0) { // 예매 숫자 0이면 예매 없다고 출력
-			System.out.println("예매된 영화가 없습니다.");
-			return;
-		}
-
-		System.out.println("모든 좌석의 예매를 취소하시겠습니까?  (Y/N)");
-		String confirm = sc.next();
-
-		if (confirm.equalsIgnoreCase("Y")) {
-			for (int i = 0; i < seats.length; i++) {
-				for (int j = 0; j < seats[i].length; j++) {// 예매 있을경우 해당 자리를 숫자로 바꿈
-					if (seats[i][j].isReserved()) {
-						seats[i][j].cancel();
-					}
-				}
-			}
-			reservationCount = 0;
-			System.out.println("예매를 모두 취소하였습니다.");
-		} else {
-			System.out.println("예약된 예매가 없음으로 일괄 취소가 실패하였습니다.");
-		}
-	}
+//		사용 안하는 메소드 
+//	// 4. 영화 예매 일괄 취소
+//	public void cancelAll() {
+//		if (reservationCount == 0) { // 예매 숫자 0이면 예매 없다고 출력
+//			System.out.println("예매된 영화가 없습니다.");
+//			return;
+//		}
+//
+//		System.out.println("모든 좌석의 예매를 취소하시겠습니까?  (Y/N)");
+//		String confirm = sc.next();
+//
+//		if (confirm.equalsIgnoreCase("Y")) {
+//			for (int i = 0; i < seats.length; i++) {
+//				for (int j = 0; j < seats[i].length; j++) {// 예매 있을경우 해당 자리를 숫자로 바꿈
+//					if (seats[i][j].isReserved()) {
+//						seats[i][j].cancel();
+//					}
+//				}
+//			}
+//			reservationCount = 0;
+//			System.out.println("예매를 모두 취소하였습니다.");
+//		} else {
+//			System.out.println("예약된 예매가 없음으로 일괄 취소가 실패하였습니다.");
+//		}
+//	}
 
 	private void nowSeats() {
 		int totalSeats = seats.length * seats[0].length;
 		System.out.println(" (전체좌석 : " + totalSeats + " / 예약된 좌석 : " + (totalSeats - reservationCount) + ")");
+	}
+
+	public int getTotalNumberOfSeats() { // 전체좌석 수 메소드
+		return seats.length * seats[0].length;
+	}
+
+	public int getNumberOfReservedSeats() { // 예약된 수 메소드
+		return reservationCount;
 	}
 
 } // class

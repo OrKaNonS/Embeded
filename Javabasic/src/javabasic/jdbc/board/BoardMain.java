@@ -23,24 +23,24 @@ public class BoardMain {
 		BoardMain bm = new BoardMain();
 		
 		// Java에서 Procedure 호출
-		// String sql = " insert into board values(seq_board.nextval, ?, ?, sysdate)";
+		String sql = " insert into board values(seq_board.nextval, ?, ?, sysdate)";
 //		String sql = "{call PROC_INSERT(?,?)}";
-//		bm.cstmt = bm.conn.prepareCall(sql);
-//		bm.cstmt.setString(1,  "제목1");
-//		bm.cstmt.setString(2,  "내용1");
-//		int result = bm.cstmt.executeUpdate();
-//		if(result>0) {
-//			System.out.println("한 행 입력 완료");
-//		}
+		bm.cstmt = bm.conn.prepareCall(sql);
+		bm.cstmt.setString(1,  "제목1");
+		bm.cstmt.setString(2,  "내용1");
+		int result = bm.cstmt.executeUpdate();
+		if(result>0) {
+			System.out.println("한 행 입력 완료");
+		}
 		
 		// Java에서 IN OUT Procedure 호출
-		String sql = "{ call PROC_INOUT(?) } ";
-		bm.cstmt = bm.conn.prepareCall(sql);
-		bm.cstmt.setInt(1, 5);		
-		bm.cstmt.registerOutParameter(1, Types.NUMERIC); // DB입장에서는 나가는 데이터_OutParameter
-		bm.cstmt.executeUpdate();
-		System.out.println(bm.cstmt.getInt(1));
-		
+//		String sql = "{ call PROC_INOUT(?) } ";
+//		bm.cstmt = bm.conn.prepareCall(sql);
+//		bm.cstmt.setInt(1, 5);		
+//		bm.cstmt.registerOutParameter(1, Types.NUMERIC); // DB입장에서는 나가는 데이터_OutParameter
+//		bm.cstmt.executeUpdate();
+//		System.out.println(bm.cstmt.getInt(1));
+//		
 		
 		
 		

@@ -28,6 +28,7 @@ public class MovieSeat {
 	}
 
 	public void reserve(String name, String id) { // 좌석 예약 완료_true
+		
 		reserved = true;
 		userName = name;
 		userID = id;
@@ -42,7 +43,7 @@ public class MovieSeat {
 	public String getreserveName() {
 		return userName;
 	}
-	
+
 	public String getuserID() {
 		return userID;
 	}
