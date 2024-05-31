@@ -24,7 +24,7 @@ public class MovieDao {
 	        pstmt.setString(1, row);
 	        pstmt.setInt(2, col); // 
 	        pstmt.setString(3, name);
-	        pstmt.setString(4, id);
+	        pstmt.setString(4, id); 
 	        pstmt.executeUpdate();
 	       
 	    } catch (SQLException e) {

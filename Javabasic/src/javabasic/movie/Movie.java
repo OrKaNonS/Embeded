@@ -131,7 +131,7 @@ public class Movie {
 			System.out.println("예약자 이름을 입력해주세요");
 			String name = sc.next();
 			System.out.println("예약자 회원가입 ID를 입력해주세요");
-			String id = sc.next();
+			String id = sc.next(); 
 
 			if (seats[seatRowint][seatNum].getreserveName().equals(name)
 					&& (seats[seatRowint][seatNum].getreserveName().equals(id))) {

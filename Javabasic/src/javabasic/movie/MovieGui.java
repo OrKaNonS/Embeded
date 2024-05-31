@@ -219,7 +219,7 @@ public class MovieGui extends JFrame {
 	        JOptionPane.showMessageDialog(jfrm, "예약자 이름 및 아이디를 입력해주세요.");
 	    }
 	}
-    
+     
 	
 
 

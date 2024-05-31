@@ -7,7 +7,7 @@ public class MovieSeat {
 	private String userName;	// 예약자 이름
 	private String userID;		// 예약자 회원가입 ID
 
-	public MovieSeat() {
+	public MovieSeat() { 
 
 	}
 

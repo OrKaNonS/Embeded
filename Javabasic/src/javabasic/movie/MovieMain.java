@@ -15,8 +15,7 @@ public class MovieMain {
 		
 //		자바 GUI 실행		
 		mg.MainMenuGui();
-//
-
+// 
 
 //		Dao 예약 코드
 		/*
