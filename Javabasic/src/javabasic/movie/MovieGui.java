@@ -33,10 +33,6 @@ public class MovieGui extends JFrame {
 
 		JPanel controlPanel = new JPanel(new GridLayout(1, 3)); // JPanel인 controlPanel을 을 1행 4열로 분열
 
-		// 상단에 전체 좌석 수와 예약된 좌석 수를 표시할 JLabel 추가
-//		seatInfo = new JLabel("전체 좌석 수: " + mv.getTotalNumberOfSeats() + " / 예약된 좌석 수: " + mv.getNumberOfReservedSeats());
-//	    controlPanel.add(seatInfo);
-
 		JButton BSeeSeat = new JButton("1. 좌석보기"); // JButton - 1. 좌석보기 누르는 버튼
 		controlPanel.add(BSeeSeat); // controlPanel에 JButton(1. 좌석보기) 추가
 		BSeeSeat.addActionListener(new ActionListener() { // 버튼 눌렀을 시 이벤트 추가
@@ -52,7 +48,6 @@ public class MovieGui extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				reserveSeat();
-//                updateSeatInfoLabel();
 			}
 		});
 
@@ -63,14 +58,9 @@ public class MovieGui extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				cancelSeat();
-//                updateSeatInfoLabel();
 			}
 
 		});
-
-//		JButton BCancelalSeat = new JButton("4. 예매일괄취소");		// JButton - 4. 예매일괄취소 누르는 버튼
-//		controlPanel.add(BCancelalSeat);						// controlPanel에 JButton(4. 예매일괄취소) 추가
-//		// 일괄 취소 버튼 이벤트 추가
 
 		jfrm.add(controlPanel, BorderLayout.NORTH);
 
@@ -110,8 +100,8 @@ public class MovieGui extends JFrame {
 
 	private void SeatClick(int row, int col) { // 버튼 눌렀을 시 행하는 메소드
 		// 좌석 선택 시 알파벳 행 값을 가져오는 코드
-	    String seatRow = String.valueOf((char) ('A' + row));
-		
+		String seatRow = String.valueOf((char) ('A' + row));
+
 		if (mv.seats[row][col].isReserved()) { // 클릭햇을 시 좌석시 예매 되어 있다면
 			// JOptionPane.showConfirmDialog는 확인 다이얼로그로 사용자로부터 Yes/NO 응답을 입력받는 다이얼로그이다.
 			// 사용자가 Yes를 선택하면 아래의 YES_OPTION을 수행, NO를 선택하면 없음_미구현
@@ -121,19 +111,21 @@ public class MovieGui extends JFrame {
 				String name = JOptionPane.showInputDialog(jfrm, "예약자 이름을 입력해주세요:"); // 예약시 입력한 이름
 				String id = JOptionPane.showInputDialog(jfrm, "예약자 아이디를 입력해주세요:"); // 예약시 입력한 회원가입 아이디
 				if (name != null && id != null && !name.isEmpty() && !id.isEmpty() // 이름, 아이디가 null이 아니고 빈값도 아니며 입력한 이름과
-						&& mv.seats[row][col].getreserveName().equals(name)			// 아이디가 같은면
+						&& mv.seats[row][col].getreserveName().equals(name) // 아이디가 같은면
 						&& mv.seats[row][col].getuserID().equals(id)) {
 					mv.seats[row][col].cancel(); // cancel() 메소드 실행으로 예약을 false로, 이름과 id는 "" 값으로 변경
-					seatButtons[row][col].setText((char) ('A' + row) + String.valueOf(col + 1)); // toString 메소드에 의해 예약이 false 이므로 X 표시를 다시 숫자로 변경
+					seatButtons[row][col].setText((char) ('A' + row) + String.valueOf(col + 1)); // toString 메소드에 의해 예약이
+																									// false 이므로 X 표시를
+																									// 다시 숫자로 변경
 					seatButtons[row][col].setBackground(Color.GREEN); // 색상 초록색으로 변경
-					
+
 					String seatNumber = (char) ('A' + row) + String.valueOf(col + 1);
-	                JOptionPane.showMessageDialog(jfrm, seatNumber + " 자리 예매가 취소되었습니다.");
-	                md.cancelSeat(seatRow, col + 1, name, id);
-	               	} 
-					else {
-					JOptionPane.showMessageDialog(jfrm, "예약자 정보가 일치하지 않습니다."); // 이름, 아이디 중 null이 있거나 이름 혹은 아이디가 일치하지 않으면																				// 
-	                				}
+					JOptionPane.showMessageDialog(jfrm, seatNumber + " 자리 예매가 취소되었습니다.");
+					md.cancelSeat(seatRow, col + 1, name, id);
+				} else {
+					JOptionPane.showMessageDialog(jfrm, "예약자 정보가 일치하지 않습니다."); // 이름, 아이디 중 null이 있거나 이름 혹은 아이디가 일치하지
+																				// 않으면 //
+				}
 			}
 		} else { // 클릭했을 시 예약이 안되어 있다면
 			String name = JOptionPane.showInputDialog(jfrm, "예약자 이름을 입력해주세요:"); // 예약할 이름
@@ -145,89 +137,74 @@ public class MovieGui extends JFrame {
 				String seatNumber = (char) ('A' + row) + String.valueOf(col + 1);
 				JOptionPane.showMessageDialog(jfrm, seatNumber + " 자리 예매가 완료되었습니다.");
 				md.reserveSeat(seatRow, (col + 1), name, id);
-// 전 코드		md.reserveSeat(String.valueOf(row), (col + 1), name, id);
 			} else {
 				JOptionPane.showMessageDialog(jfrm, "예약자 이름 혹은 아이디가 잘못입력되었습니다."); // 이름 또는 아이디가 입력되지 않았을 때 안내 메시지 출력
 
 			}
 		}
 	}
-	
+
 	// 영화예매 버튼의 동작 추가
 	private void reserveSeat() {
-	    String name = JOptionPane.showInputDialog(jfrm, "예약자 이름을 입력해주세요:");
-	    String id = JOptionPane.showInputDialog(jfrm, "예약자 아이디를 입력해주세요:");
-	    if (name != null && id != null && !name.isEmpty() && !id.isEmpty()) {
-	        int choice = JOptionPane.showConfirmDialog(jfrm, "좌석을 직접 선택하시겠습니까?", "좌석 선택", JOptionPane.YES_NO_OPTION);
-	        if (choice == JOptionPane.YES_OPTION) {
-	            showSeatsGui();
-	        } else {
-	            String seatNumber = JOptionPane.showInputDialog(jfrm, "예약할 좌석 번호를 입력해주세요 (예: A1):");
-	            if (seatNumber != null && !seatNumber.isEmpty()) {
-	                int row = seatNumber.charAt(0) - 'A';
-	                int col = Integer.parseInt(seatNumber.substring(1)) - 1;
-	                if (row >= 0 && row < 8 && col >= 0 && col < 10) {
-	                    if (!mv.seats[row][col].isReserved()) {
-	                        mv.seats[row][col].reserve(name, id);
-	                        seatButtons[row][col].setText(mv.seats[row][col].toString());
-	                        seatButtons[row][col].setBackground(Color.RED);
-	                        JOptionPane.showMessageDialog(jfrm, seatNumber + " 자리 예매가 완료되었습니다.");
-	                        // 데이터베이스에 좌석 예약 정보 저장
-	                        md.reserveSeat(String.valueOf((char) ('A' + row)), (col + 1), name, id);
-//	전 코드                   md.reserveSeat(String.valueOf(row), (col + 1), name, id);
-	                    } else {
-	                        JOptionPane.showMessageDialog(jfrm, "이미 예약된 좌석입니다.");
-	                    }
-	                } else {
-	                    JOptionPane.showMessageDialog(jfrm, "좌석 번호가 올바르지 않습니다.");
-	                }
-	            }
-	        }
-	    } else {
-	        JOptionPane.showMessageDialog(jfrm, "예약자 이름 또는 아이디를 입력해주세요.");
-	    }
+		String name = JOptionPane.showInputDialog(jfrm, "예약자 이름을 입력해주세요:");
+		String id = JOptionPane.showInputDialog(jfrm, "예약자 아이디를 입력해주세요:");
+		if (name != null && id != null && !name.isEmpty() && !id.isEmpty()) {
+			int choice = JOptionPane.showConfirmDialog(jfrm, "좌석을 직접 선택하시겠습니까?", "좌석 선택", JOptionPane.YES_NO_OPTION);
+			if (choice == JOptionPane.YES_OPTION) {
+				showSeatsGui();
+			} else {
+				String seatNumber = JOptionPane.showInputDialog(jfrm, "예약할 좌석 번호를 입력해주세요 (예: A1):");
+				if (seatNumber != null && !seatNumber.isEmpty()) {
+					int row = seatNumber.charAt(0) - 'A';
+					int col = Integer.parseInt(seatNumber.substring(1)) - 1;
+					if (row >= 0 && row < 8 && col >= 0 && col < 10) {
+						if (!mv.seats[row][col].isReserved()) {
+							mv.seats[row][col].reserve(name, id);
+							seatButtons[row][col].setText(mv.seats[row][col].toString());
+							seatButtons[row][col].setBackground(Color.RED);
+							JOptionPane.showMessageDialog(jfrm, seatNumber + " 자리 예매가 완료되었습니다.");
+							// 데이터베이스에 좌석 예약 정보 저장
+							md.reserveSeat(String.valueOf((char) ('A' + row)), (col + 1), name, id);
+						} else {
+							JOptionPane.showMessageDialog(jfrm, "이미 예약된 좌석입니다.");
+						}
+					} else {
+						JOptionPane.showMessageDialog(jfrm, "좌석 번호가 올바르지 않습니다.");
+					}
+				}
+			}
+		} else {
+			JOptionPane.showMessageDialog(jfrm, "예약자 이름 또는 아이디를 입력해주세요.");
+		}
 	}
 
-
-	
 	// 영화예매취소 버튼의 동작 추가
 	private void cancelSeat() {
 		String name = JOptionPane.showInputDialog(jfrm, "예약자 이름을 입력해주세요:");
-	    String id = JOptionPane.showInputDialog(jfrm, "예약자 아이디를 입력해주세요:");
-	    if (name != null && !name.isEmpty() && id != null && !id.isEmpty()) {
-	        String seatNumber = JOptionPane.showInputDialog(jfrm, "취소할 좌석 번호를 입력해주세요 (예: A1):");
-	        if (seatNumber != null && !seatNumber.isEmpty()) {
-	            int row = seatNumber.charAt(0) - 'A';
-	            int col = Integer.parseInt(seatNumber.substring(1)) - 1;
-	            if (row >= 0 && row < 8 && col >= 0 && col < 10) {
-	                if (mv.seats[row][col].isReserved() && mv.seats[row][col].getuserID().equals(id)) {
-	                    mv.seats[row][col].cancel();
-	                    seatButtons[row][col].setText((char) ('A' + row) + String.valueOf(col + 1));
-	                    seatButtons[row][col].setBackground(Color.GREEN);
-	                    JOptionPane.showMessageDialog(jfrm, seatNumber + " 자리 예매가 취소되었습니다.");
-	                   
-	                    String seatRow = String.valueOf((char) ('A' + row));
-	                    md.cancelSeat(seatRow, col + 1, name, id);
-	                } else {
-	                    JOptionPane.showMessageDialog(jfrm, "해당 좌석을 예약한 사용자가 아니거나 예약된 좌석이 아닙니다.");
-	                }
-	            } else {
-	                JOptionPane.showMessageDialog(jfrm, "좌석 번호가 올바르지 않습니다.");
-	            }
-	        }
-	    } else {
-	        JOptionPane.showMessageDialog(jfrm, "예약자 이름 및 아이디를 입력해주세요.");
-	    }
+		String id = JOptionPane.showInputDialog(jfrm, "예약자 아이디를 입력해주세요:");
+		if (name != null && !name.isEmpty() && id != null && !id.isEmpty()) {
+			String seatNumber = JOptionPane.showInputDialog(jfrm, "취소할 좌석 번호를 입력해주세요 (예: A1):");
+			if (seatNumber != null && !seatNumber.isEmpty()) {
+				int row = seatNumber.charAt(0) - 'A';
+				int col = Integer.parseInt(seatNumber.substring(1)) - 1;
+				if (row >= 0 && row < 8 && col >= 0 && col < 10) {
+					if (mv.seats[row][col].isReserved() && mv.seats[row][col].getuserID().equals(id)) {
+						mv.seats[row][col].cancel();
+						seatButtons[row][col].setText((char) ('A' + row) + String.valueOf(col + 1));
+						seatButtons[row][col].setBackground(Color.GREEN);
+						JOptionPane.showMessageDialog(jfrm, seatNumber + " 자리 예매가 취소되었습니다.");
+
+						String seatRow = String.valueOf((char) ('A' + row));
+						md.cancelSeat(seatRow, col + 1, name, id);
+					} else {
+						JOptionPane.showMessageDialog(jfrm, "해당 좌석을 예약한 사용자가 아니거나 예약된 좌석이 아닙니다.");
+					}
+				} else {
+					JOptionPane.showMessageDialog(jfrm, "좌석 번호가 올바르지 않습니다.");
+				}
+			}
+		} else {
+			JOptionPane.showMessageDialog(jfrm, "예약자 이름 및 아이디를 입력해주세요.");
+		}
 	}
-     
-	
-
-
-	
-
-//	// JLabel 업데이트 메소드
-//	private void updateSeatInfoLabel() {
-//	    seatInfo.setText("전체 좌석 수: " + mv.getTotalNumberOfSeats() + " / 예약된 좌석 수: " + mv.getNumberOfReservedSeats());
-//	}
-
 }
