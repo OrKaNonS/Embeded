@@ -10,10 +10,10 @@ public class MovieMain {
 		MovieDao md = new MovieDao(); // Dao 실행
 
 //		자바 코드 실행		
-		mv.showMenu();
+//		mv.showMenu();
 
 //		자바 GUI 실행		
-//		mg.MainMenuGui();
+		mg.MainMenuGui();
 // 
 
 //		Dao 예약 코드

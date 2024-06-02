@@ -103,7 +103,7 @@ public class Movie {
 	// 3. 영화 예매 취소
 	public void cancelSeat() {
 		if (reservationCount == 0) { // 예매 숫자 0이면 예매 없다고 출력
-			System.out.println("예먜한 자리가 없습니다.");
+			System.out.println("예매한 자리가 없습니다.");
 			return;
 		}
 		System.out.println("예매취소를 원하는 행을 입력해주세요(A~H)");
@@ -119,7 +119,7 @@ public class Movie {
 			String id = sc.next();
 
 			if (seats[seatRowint][seatNum].getreserveName().equals(name)
-					&& (seats[seatRowint][seatNum].getreserveName().equals(id))) {
+					&& seats[seatRowint][seatNum].getuserID().equals(id)) {
 				md.cancelSeat(seatRow, seatNum + 1, name, id);
 				seats[seatRowint][seatNum].cancel();
 				System.out.println(seatRow + (seatNum + 1) + " 자리 예매가 취소되었습니다.");
